@@ -16,23 +16,14 @@ This is the front page of a website that is powered by the [academicpages templa
 -->
 
 <span style="color:red"> News </span> **Research (Journal)** Our paper [RObotic MAnipulation Network (ROMAN) - Hybrid Hierarchical Learning for Solving Complex Sequential Tasks](https://arxiv.org/abs/2307.00125) was accepted in Nature Machine Intelligence 2023!<br/>
-
 <span style="color:red"> News </span> **Research (Journal)** Our paper [Identifying Important Sensory Feedback for Learning Locomotion Skills](https://arxiv.org/abs/2306.17101) was accepted in Nature Machine Intelligence 2023!<br/>
-
 <span style="color:red"> News </span> **Research (Journal)** Our paper [Modular Neural Network Policies for Learning In-Flight Object Catching with a Robot Hand-Arm System]() was accepted in IEEE IROS 2023!<br/>
-
 <span style="color:red"> News </span>  **ICRA 2022 Invitation!** Our paper Metrics for 3D Object Pointing and Manipulation in Virtual Reality was invited and presented in ICRA 2022! [Poster](https://etriantafyllidis.github.io/files/icra_2022_poster_triantafyllidis.pdf). <br/>
-
 <span style="color:red"> News </span> **Research (Journal)** Our paper [Metrics for 3D Object Pointing and Manipulation in Virtual Reality: The Introduction and Validation of a Novel Approach in Measuring Human Performance](https://ieeexplore.ieee.org/abstract/document/9492850) was accepted at the IEEE Robotics and Automation Magazine (RAM) 2021!<br/>
-
 <span style="color:red"> News </span> **Research (Conference)** Our paper [The Challenges in Modeling Human Performance in 3D Space with Fitts’ Law](https://dl.acm.org/doi/abs/10.1145/3411763.3443442) was accepted at the ACM Conference on Human Factors in Computing Systems (CHI) 2021!<br/>
-
 <span style="color:red"> News </span> **Research (Conference)** Our paper [Considerations and Challenges of Measuring Operator Performance in Telepresence and Teleoperation Entailing Mixed Reality Technologies](https://arxiv.org/abs/2103.12702) was accepted at the ACM Conference on Human Factors in Computing Systems Workshop - Evaluating User Experiences in Mixed Reality (CHI) 2021!<br/>
-
 <span style="color:red"> News </span>  **Best Student Case Study of 2021!** Our paper [How Well Am I Doing?: Measuring Human Performance in Teleoperation – The Introduction of a Novel Approach](https://www.edinburgh-robotics.org/sites/default/files/Annual%20Review%202020-21%20Final%20version.pdf#page=62) was selected as the best student case study in the Annual Review of the Centre for Doctoral Training in Robotics and Autonomous Systems Conference! Edinburgh, UK. <br/>
-
 <span style="color:red"> News </span> **Research (Journal)** Our paper [Study of Multimodal Interfaces and the Improvements on Teleoperation](https://ieeexplore.ieee.org/abstract/document/9076603) was accepted at the IEEE Access Journal 2020!<br/>
-
 <span style="color:red"> News </span> **Research (Book Chapter)** Our submission [Robot Intelligence for Real-World Applications](https://digital-library.theiet.org/content/books/10.1049/pbpc034e_ch4) was accepted and included as a book chapter in the IET - AI for Emerging Verticals: Human-Robot Computing, Sensing and Networking, 2020!<br/>
 {: .notice}
 
