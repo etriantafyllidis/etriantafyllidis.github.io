@@ -9,6 +9,8 @@ redirect_from:
 
 {% include base_path %}
 
+My CV can be found [here](https://etriantafyllidis.github.io/files/cv_triantafyllidis.pdf).
+
 Education
 ======
 * Ph.D. in Robotics, Machine Learning and Human Factors, University of Edinburgh, 2019/23
