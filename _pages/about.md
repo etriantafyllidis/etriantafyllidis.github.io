@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "academicpages is a ready-to-fork GitHub Pages template for academic personal websites"
+title: "Eleftherios Triantafyllidis"
 excerpt: "About me"
 author_profile: true
 redirect_from: 
@@ -8,8 +8,35 @@ redirect_from:
   - /about.html
 ---
 
-This is the front page of a website that is powered by the [academicpages template](https://github.com/academicpages/academicpages.github.io) and hosted on GitHub pages. [GitHub pages](https://pages.github.com) is a free service in which websites are built and hosted from code and data stored in a GitHub repository, automatically updating when a new commit is made to the respository. This template was forked from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/) created by Michael Rose, and then extended to support the kinds of content that academics have: publications, talks, teaching, a portfolio, blog posts, and a dynamically-generated CV. You can fork [this repository](https://github.com/academicpages/academicpages.github.io) right now, modify the configuration and markdown files, add your own PDFs and other content, and have your own site for free, with no ads! An older version of this template powers my own personal website at [stuartgeiger.com](http://stuartgeiger.com), which uses [this Github repository](https://github.com/staeiou/staeiou.github.io).
+Hi, welcome to my website! :) My name is Eleftherios Triantafyllidis (I know, quite a mouthful). I am currently a PhD student at the University of Edinburgh.
 
+
+<!--
+This is the front page of a website that is powered by the [academicpages template](https://github.com/academicpages/academicpages.github.io) and hosted on GitHub pages. [GitHub pages](https://pages.github.com) is a free service in which websites are built and hosted from code and data stored in a GitHub repository, automatically updating when a new commit is made to the respository. This template was forked from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/) created by Michael Rose, and then extended to support the kinds of content that academics have: publications, talks, teaching, a portfolio, blog posts, and a dynamically-generated CV. You can fork [this repository](https://github.com/academicpages/academicpages.github.io) right now, modify the configuration and markdown files, add your own PDFs and other content, and have your own site for free, with no ads! An older version of this template powers my own personal website at [stuartgeiger.com](http://stuartgeiger.com), which uses [this Github repository](https://github.com/staeiou/staeiou.github.io).
+-->
+
+<span style="color:red"> News </span> **Research (Journal)** Our paper [RObotic MAnipulation Network (ROMAN) - Hybrid Hierarchical Learning for Solving Complex Sequential Tasks](https://arxiv.org/abs/2307.00125) was accepted in Nature Machine Intelligence 2023!<br/>
+
+<span style="color:red"> News </span> **Research (Journal)** Our paper [Identifying Important Sensory Feedback for Learning Locomotion Skills](https://arxiv.org/abs/2306.17101) was accepted in Nature Machine Intelligence 2023!<br/>
+
+<span style="color:red"> News </span> **Research (Journal)** Our paper [Modular Neural Network Policies for Learning In-Flight Object Catching with a Robot Hand-Arm System]() was accepted in IEEE IROS 2023!<br/>
+
+<span style="color:red"> News </span>  **ICRA 2022 Invitation!** Our paper Metrics for 3D Object Pointing and Manipulation in Virtual Reality was invited for ICRA 2022! [Poster](https://etriantafyllidis.github.io/files/icra_2022_poster_triantafyllidis.pdf). <br/>
+
+<span style="color:red"> News </span> **Research (Journal)** Our paper [Metrics for 3D Object Pointing and Manipulation in Virtual Reality: The Introduction and Validation of a Novel Approach in Measuring Human Performance](https://ieeexplore.ieee.org/abstract/document/9492850) was accepted at the IEEE Robotics and Automation Magazine (RAM) 2021!<br/>
+
+<span style="color:red"> News </span> **Research (Conference)** Our paper [The Challenges in Modeling Human Performance in 3D Space with Fitts’ Law](https://dl.acm.org/doi/abs/10.1145/3411763.3443442) was accepted at the ACM Conference on Human Factors in Computing Systems (CHI) 2021!<br/>
+
+<span style="color:red"> News </span> **Research (Conference)** Our paper [Considerations and Challenges of Measuring Operator Performance in Telepresence and Teleoperation Entailing Mixed Reality Technologies](https://arxiv.org/abs/2103.12702) was accepted at the ACM Conference on Human Factors in Computing Systems Workshop - Evaluating User Experiences in Mixed Reality (CHI) 2021!<br/>
+
+<span style="color:red"> News </span>  **Best Student Case Study of 2021!** Our paper [How Well Am I Doing?: Measuring Human Performance in Teleoperation – The Introduction of a Novel Approach](https://www.edinburgh-robotics.org/sites/default/files/Annual%20Review%202020-21%20Final%20version.pdf#page=62) was selected as the best student case study in the Annual Review of the Centre for Doctoral Training in Robotics and Autonomous Systems Conference! Edinburgh, UK. <br/>
+
+<span style="color:red"> News </span> **Research (Journal)** Our paper [Study of Multimodal Interfaces and the Improvements on Teleoperation](https://ieeexplore.ieee.org/abstract/document/9076603) was accepted at the IEEE Access Journal 2020!<br/>
+
+<span style="color:red"> News </span> **Research (Book Chapter)** Our submission [Robot Intelligence for Real-World Applications](https://digital-library.theiet.org/content/books/10.1049/pbpc034e_ch4) was accepted and included as a book chapter in the IET - AI for Emerging Verticals: Human-Robot Computing, Sensing and Networking, 2020!<br/>
+{: .notice}
+
+<!--
 A data-driven personal website
 ======
 Like many other Jekyll-based GitHub Pages templates, academicpages makes you separate the website's content from its form. The content & metadata of your website are in structured markdown files, while various other files constitute the theme, specifying how to transform that content & metadata into HTML pages. You keep these various markdown (.md), YAML (.yml), HTML, and CSS files in a public GitHub repository. Each time you commit and push an update to the repository, the [GitHub pages](https://pages.github.com/) service creates static HTML pages based on these files, which are hosted on GitHub's servers free of charge.
@@ -47,4 +74,4 @@ Example: editing a markdown file for a talk
 
 For more info
 ------
-More info about configuring academicpages can be found in [the guide](https://academicpages.github.io/markdown/). The [guides for the Minimal Mistakes theme](https://mmistakes.github.io/minimal-mistakes/docs/configuration/) (which this theme was forked from) might also be helpful.
+More info about configuring academicpages can be found in [the guide](https://academicpages.github.io/markdown/). The [guides for the Minimal Mistakes theme](https://mmistakes.github.io/minimal-mistakes/docs/configuration/) (which this theme was forked from) might also be helpful. -->
