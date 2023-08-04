@@ -21,7 +21,7 @@ This is the front page of a website that is powered by the [academicpages templa
 
 <span style="color:red"> News </span> **Research (Journal)** Our paper [Modular Neural Network Policies for Learning In-Flight Object Catching with a Robot Hand-Arm System]() was accepted in IEEE IROS 2023!<br/>
 
-<span style="color:red"> News </span>  **ICRA 2022 Invitation!** Our paper Metrics for 3D Object Pointing and Manipulation in Virtual Reality was invited for ICRA 2022! [Poster](https://etriantafyllidis.github.io/files/icra_2022_poster_triantafyllidis.pdf). <br/>
+<span style="color:red"> News </span>  **ICRA 2022 Invitation!** Our paper Metrics for 3D Object Pointing and Manipulation in Virtual Reality was invited and presented in ICRA 2022! [Poster](https://etriantafyllidis.github.io/files/icra_2022_poster_triantafyllidis.pdf). <br/>
 
 <span style="color:red"> News </span> **Research (Journal)** Our paper [Metrics for 3D Object Pointing and Manipulation in Virtual Reality: The Introduction and Validation of a Novel Approach in Measuring Human Performance](https://ieeexplore.ieee.org/abstract/document/9492850) was accepted at the IEEE Robotics and Automation Magazine (RAM) 2021!<br/>
 
