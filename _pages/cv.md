@@ -13,9 +13,9 @@ My CV can be found [here](https://etriantafyllidis.github.io/files/cv_triantafyl
 
 Education
 ======
-* <b>Ph.D<b>. in Robotics, Machine Learning and Human Factors, University of Edinburgh, 2019/23
-* <b>M.Sc.<b> in Robotics and Human Factors, University of Edinburgh, 2018/19
-* <b>B.Sc.<b> in Computer Science, University of Applied Sciences in Kavala, 2011/16
+* <b> Ph.D. <b> in Robotics, Machine Learning and Human Factors, University of Edinburgh, 2019/23
+* <b> M.Sc. <b> in Robotics and Human Factors, University of Edinburgh, 2018/19
+* <b> B.Sc. <b> in Computer Science, University of Applied Sciences in Kavala, 2011/16
 
 Work experience
 ======
