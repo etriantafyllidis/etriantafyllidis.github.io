@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "CV"
+title: "Curriculum Vitae"
 permalink: /cv/
 author_profile: true
 redirect_from:
@@ -9,7 +9,7 @@ redirect_from:
 
 {% include base_path %}
 
-My CV can be found [here](https://etriantafyllidis.github.io/files/cv_triantafyllidis.pdf).
+My up-to-date CV can be found [here](https://etriantafyllidis.github.io/files/cv_triantafyllidis.pdf).
 
 Education
 ======
