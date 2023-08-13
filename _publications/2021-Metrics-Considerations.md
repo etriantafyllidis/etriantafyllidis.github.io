@@ -5,7 +5,7 @@ excerpt: 'This paper presents an overview of existing methods in assessing human
 date: 2021-05-07
 venue: 'ACM CHI 2021 (Evaluating User Experiences in Mixed Reality Workshop)'
 paperurl: 'https://arxiv.org/pdf/2103.12702.pdf'
-citation: 'Eleftherios Triantafyllidis and Zhibin Li. 2021. Considerations and Challenges of Measuring Operator Performance in
+citation: '**Eleftherios Triantafyllidis** and Zhibin Li. 2021. Considerations and Challenges of Measuring Operator Performance in
 Telepresence and Teleoperation Entailing Mixed Reality Technologies. In CHI Conference on Human Factors
 in Computing Systems Workshop CHI 2021 (Evaluating User Experiences in Mixed Reality). Association for Computing
 Machinery, May 7, 2021, Yokohama, Japan. ACM, New York, NY, USA.'

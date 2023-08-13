@@ -6,7 +6,7 @@ excerpt: 'The paper introduces a modular framework for training robot hand-arm s
 date: 2023-10-01
 venue: 'IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)'
 paperurl: 'https://arxiv.org/abs' 
-citation: 'Wenbin Hu, Fernando Acero, Eleftherios Triantafyllidis, Zhaocheng Liu and Zhibin Li. (2023). "Modular Neural Network Policies for Learning In-flight Object Catching with a Robot Hand-Arm System." in IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS).'
+citation: 'Wenbin Hu, Fernando Acero, **Eleftherios Triantafyllidis**, Zhaocheng Liu and Zhibin Li. (2023). "Modular Neural Network Policies for Learning In-flight Object Catching with a Robot Hand-Arm System." in IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS).'
 ---
 <img src="/images/500x300.png" alt="Description of image" width="300"/>
 
