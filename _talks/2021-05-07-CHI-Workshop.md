@@ -2,9 +2,9 @@
 title: "Conference Workshop Talk - ACM CHI 2021"
 collection: talks
 type: "Conference proceedings talk"
-permalink: /talks/2021-04-07-CHI-Workshop
+permalink: /talks/2021-05-07-CHI-Workshop
 venue: "ACM Conference on Human Factors in Computing Systems (CHI) 2021 (Evaluating User Experiences in Mixed Reality Workshop)"
-date: 2021-04-07
+date: 2021-05-07
 location: "Yokohama, Japan (Virtual)"
 ---
 
