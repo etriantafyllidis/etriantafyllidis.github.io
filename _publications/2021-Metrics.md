@@ -6,7 +6,7 @@ excerpt: 'This paper introduces a new performance metric based on Fitts law, des
 date: 2022-03-01
 venue: 'IEEE Robotics & Automation Magazine (IEEE RAM)'
 paperurl: 'https://arxiv.org/pdf/2106.06655.pdf'
-citation: '**Eleftherios Triantafyllidis**, Wenbin Hu, Christopher McGreavy and Zhibin Li, "Metrics for 3D Object Pointing and Manipulation in Virtual Reality: The Introduction and Validation of a Novel Approach in Measuring Human Performance," in IEEE Robotics & Automation Magazine, vol. 29, no. 1, pp. 76-91, March 2022, doi: 10.1109/MRA.2021.3090070.'
+citation: 'Eleftherios Triantafyllidis, Wenbin Hu, Christopher McGreavy and Zhibin Li, "Metrics for 3D Object Pointing and Manipulation in Virtual Reality: The Introduction and Validation of a Novel Approach in Measuring Human Performance," in IEEE Robotics & Automation Magazine, vol. 29, no. 1, pp. 76-91, March 2022, doi: 10.1109/MRA.2021.3090070.'
 ---
 <img src="/images/500x300.png" alt="Description of image" width="300"/>
 
