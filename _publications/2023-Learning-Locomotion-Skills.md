@@ -6,7 +6,7 @@ excerpt: 'This paper presents a saliency analysis to determine the most crucial 
 date: 2023-06-30
 venue: 'Nature Machine Intelligence'
 paperurl: 'https://www.nature.com/articles/s42256-023-00701-w' 
-citation: 'W. Yu, C. Yang, C. McGreavy, E. Triantafyllidis, G. Bellegarda, M. Shafiee, A. J. Ijspeert and Z. Li. (2023). Identifying Important Sensory Feedback for Learning Locomotion Skills. Nature Machine Intelligence, Volume: 5, Issue: 8, Pages: 919–932, DOI: 10.1038/s42256-023-00701-w.'
+citation: 'Wanming Yu, Chuanyu Yang, Christopher McGreavy, Eleftherios Triantafyllidis, Guillaume Bellegarda, Milad Shafiee, Auke Jan Ijspeert and Zhibin Li (2023). "Identifying Important Sensory Feedback for Learning Locomotion Skills." in Nature Machine Intelligence (NMI) 2023.'
 ---
 <img src="/images/500x300.png" alt="Description of image" width="300"/>
 
