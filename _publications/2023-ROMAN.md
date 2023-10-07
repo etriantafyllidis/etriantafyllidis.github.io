@@ -6,7 +6,7 @@ excerpt: 'This paper presents a novel framework known as the Robotic Manipulatio
 date: 2023-07-18
 venue: 'Nature Machine Intelligence'
 paperurl: 'https://www.nature.com/articles/s42256-023-00709-2'
-citation: 'Eleftherios Triantafyllidis, Fernando Acero, Zhaocheng Liu, Zhibin Li (2023). "RObotic MAnipulation Network (ROMAN) - Hybrid Hierarchical Learning for Solving Complex Sequential Tasks." in Nature Machine Intelligence (NMI) 2023.'
+citation: 'Triantafyllidis, E., Acero, F., Liu, Z. et al. Hybrid hierarchical learning for solving complex sequential tasks using the robotic manipulation network ROMAN. Nat Mach Intell 5, 991–1005 (2023). https://doi.org/10.1038/s42256-023-00709-2'
 ---
 <img src="/images/500x300.png" alt="Description of image" width="300"/>
 
