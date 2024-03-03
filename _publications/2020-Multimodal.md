@@ -8,7 +8,7 @@ venue: 'IEEE Access'
 paperurl: 'https://arxiv.org/pdf/2003.14392.pdf'
 citation: 'Eleftherios Triantafyllidis, Christopher Mcgreavy, Jiacheng Gu and Zhibin Li, "Study of Multimodal Interfaces and the Improvements on Teleoperation," in IEEE Access, vol. 8, pp. 78213-78227, 2020, doi: 10.1109/ACCESS.2020.2990080.'
 ---
-<img src="/images/publication_multimodal-interfaces.png" alt="Description of image" width="300"/>
+<img src="/images/publication_multimodal-interfaces.png" alt="Description of image" width="600"/>
 
 This paper examines how different sensory combinations entailing a full factorial comparison of auditory, visual and somatosensory feedback states, influence motor task performance in 3D space. Through a series of increasingly more complex motor tasks with human subjects, a correlation is established between multimodal interfaces and their effects on motor performance.
 
