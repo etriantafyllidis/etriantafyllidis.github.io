@@ -80,9 +80,9 @@ analytics:
 
 # Site Author
 author:
-  name             : "Eleftherios Triantafyllidis"
+  name             : "Dr. Eleftherios Triantafyllidis"
   avatar           : "profile.png"
-  bio              : "PhD Student in Robotic Machine Learning with Human Factors (VR/MR)"
+  bio              : "PhD in Bio-Inspired Robotic Learning with Human Factors (VR/MR)"
   location         : "Edinburgh, UK"
   employer         :
   pubmed           : # "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
