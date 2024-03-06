@@ -8,7 +8,7 @@ venue: 'Doctoral Thesis'
 paperurl: 'https://era.ed.ac.uk/handle/1842/41453'
 citation: 'Eleftherios Triantafyllidis (2024). "Advancements in Sensory-Motor Perception and Biologically-Inspired Hierarchical Learning for Embodied Intelligence". Doctoral Dissertation. The University of Edinburgh, February, 2024. Edinburgh, United Kingdom.'
 ---
-<img src="/images/publication_phd-thesis.png" alt="Description of image" width="300"/>
+<img src="/images/publication_phd-thesis.png" alt="Description of image" width="600"/>
 
 This doctoral thesis delves into the fascinating world where biology meets robotics. Inspired by the remarkable sensory, dexterous, and cognitive abilities of humans, this thesis explores pathways to augment machines with human-like cognition and dexterity, inspired from a neurobiological standpoint. 
 
