@@ -8,6 +8,8 @@ date: 2023-07-22
 location: "(Virtual)"
 ---
 
+<img src="/images/nmi_cover" alt="Description of image" width="300"/>
+
 The journal paper Hybrid Hierarchical Learning for Solving Complex Sequential Tasks Using the RObotic MAnipulation Network - ROMAN can be accessed in [Nature Machine Intelligence](https://www.nature.com/articles/s42256-023-00709-2), with a video presentation of the work also available on [YouTube](https://www.youtube.com/watch?v=msWtPeOwLzc). 
 
 
