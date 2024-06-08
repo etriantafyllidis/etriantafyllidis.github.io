@@ -17,7 +17,7 @@ Education
 * <b> M.Sc. </b> in Robotics and Human Factors, University of Edinburgh, 2018/19
 * <b> B.Sc. </b> in Computer Science, University of Applied Sciences in Kavala, 2011/16
 
-Work experience
+Work Experience
 ======
 * Teaching Assistant and Mentor @ <b> The University of Edinburgh </b> in Edinburgh, UK - Sep 2019-Present
 * Research Intern @ <b> Telexistence </b> in Tokyo, Japan - Jul-Oct 2022
