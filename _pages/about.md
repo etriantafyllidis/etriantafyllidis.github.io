@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Eleftherios Triantafyllidis"
+title: "Eleftherios Triantafyllidis, PhD"
 excerpt: "About me"
 author_profile: true
 redirect_from: 
