@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>AR Model Viewer</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.3.2/aframe/build/aframe-ar.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markerless AR</title>
     <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
         #controls {
             position: absolute;
             bottom: 20px;
@@ -26,107 +30,95 @@
             }
     </style>
 </head>
-<body style="margin: 0; overflow: hidden;">
+<body>
     <div id="controls">
         <label for="scale">Scale:</label>
         <input type="range" id="scale" min="0.1" max="2" step="0.1" value="1">
         <label for="rotation">Rotation Y:</label>
         <input type="range" id="rotation" min="0" max="360" step="1" value="0">
-        <label for="positionY">Position Y:</label>
-        <input type="range" id="positionY" min="-2" max="2" step="0.1" value="0">
-        <button id="modeToggle">Place Mode</button>
+        <button id="placeButton">Place Object</button>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@webxr-input-profiles/motion-controllers@1.0.0/dist/motion-controllers.module.js"></script>
+    <script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
+    <script>let scene, camera, renderer;
+        let controller, reticle;
+        let model, isPlaced = false;
 
-    <a-scene embedded arjs>
-        <a-marker preset="hiro" id="hiroMarker" emitevents="true">
-            <a-entity id="modelEntity" gltf-model="#model" visible="false"></a-entity>
-        </a-marker>
-        <a-entity camera></a-entity>
-    </a-scene>
+        // Initialize Three.js scene
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.xr.enabled = true;
+        document.body.appendChild(renderer.domElement);
 
-    <a-assets>
-        <a-asset-item id="model" src="model.gltf"></a-asset-item>
-    </a-assets>
+        // AR Button
+        document.body.appendChild(THREE.WebXRUtils.createButton(renderer));
 
-    <script>const marker = document.querySelector('#hiroMarker');
-        const modelEntity = document.querySelector('#modelEntity');
-        const modeToggleButton = document.getElementById('modeToggle');
+        // Lights
+        const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
+        scene.add(light);
 
-        let lastPosition = new THREE.Vector3();
-        let lastRotation = new THREE.Euler();
-        let isPlaceMode = false;
-        let markerFound = false;
+        // Reticle for placement
+        const geometry = new THREE.RingGeometry(0.15, 0.2, 32).rotateX(- Math.PI / 2);
+        const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        reticle = new THREE.Mesh(geometry, material);
+        reticle.matrixAutoUpdate = false;
+        reticle.visible = false;
+        scene.add(reticle);
 
-        // Set the mode button and initial mode
-        modeToggleButton.textContent = 'Place Mode';
-
-        marker.addEventListener('markerFound', () => {
-            if (!markerFound && !isPlaceMode) {
-                console.log('Marker found!');
-                markerFound = true;
-                modelEntity.setAttribute('visible', true);
-            }
+        // Load Model (e.g., glTF)
+        const loader = new THREE.GLTFLoader();
+        loader.load('model.gltf', (gltf) => {
+            model = gltf.scene;
+            model.scale.set(0.5, 0.5, 0.5);
+            model.visible = false;
+            scene.add(model);
         });
 
-        marker.addEventListener('markerLost', () => {
-            if (markerFound && !isPlaceMode) {
-                console.log('Marker lost!');
-                markerFound = false;
-                lastPosition.copy(modelEntity.object3D.position);
-                lastRotation.copy(modelEntity.object3D.rotation);
+        // Controller
+        controller = renderer.xr.getController(0);
+        controller.addEventListener('select', onSelect);
+        scene.add(controller);
+
+        function onSelect() {
+            if (!isPlaced) {
+                // Place the model at the reticle's position
+                model.position.setFromMatrixPosition(reticle.matrix);
+                model.visible = true;
+                isPlaced = true;
             }
+        }
+
+        // Animation loop
+        renderer.setAnimationLoop(() => {
+            if (reticle.visible) {
+                reticle.matrix.copy(controller.matrixWorld);
+                reticle.matrix.decompose(reticle.position, reticle.rotation, reticle.scale);
+            }
+            renderer.render(scene, camera);
         });
 
-        // Smoothing and position maintenance
-        AFRAME.registerComponent('smooth-move', {
-            tick: function () {
-                if (isPlaceMode) {
-                    // Keep the model at the last known position and rotation
-                    modelEntity.object3D.position.copy(lastPosition);
-                    modelEntity.object3D.rotation.copy(lastRotation);
-                }
-            }
-        });
-        modelEntity.setAttribute('smooth-move', '');
-
-        // Mode Toggle
-        modeToggleButton.addEventListener('click', () => {
-            isPlaceMode = !isPlaceMode;
-            modeToggleButton.textContent = isPlaceMode ? 'Detect Mode' : 'Place Mode';
-            if (isPlaceMode) {
-                console.log('Switched to Place Mode');
-                modelEntity.setAttribute('visible', true);
-                // Stop using marker updates, maintain current position
-                lastPosition.copy(modelEntity.object3D.position);
-                lastRotation.copy(modelEntity.object3D.rotation);
-            } else {
-                console.log('Switched to Detect Mode');
-                // Reset to default AR.js tracking behavior
-                markerFound = false;
-                modelEntity.setAttribute('visible', false);
-            }
-        });
-
-        // Sliders for scale, rotation, and position
+        // UI Controls
         const scaleSlider = document.getElementById('scale');
         const rotationSlider = document.getElementById('rotation');
-        const positionYSlider = document.getElementById('positionY');
 
         scaleSlider.addEventListener('input', () => {
             const scale = scaleSlider.value;
-            modelEntity.setAttribute('scale', { x: scale, y: scale, z: scale });
+            if (model) model.scale.set(scale, scale, scale);
         });
 
         rotationSlider.addEventListener('input', () => {
-            const rotationY = rotationSlider.value;
-            lastRotation.y = THREE.Math.degToRad(rotationY);
-            modelEntity.object3D.rotation.copy(lastRotation);
+            const rotationY = THREE.Math.degToRad(rotationSlider.value);
+            if (model) model.rotation.y = rotationY;
         });
 
-        positionYSlider.addEventListener('input', () => {
-            const positionY = positionYSlider.value;
-            lastPosition.y = parseFloat(positionY);
-            modelEntity.object3D.position.copy(lastPosition);
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
         });</script>
 </body>
 </html>
