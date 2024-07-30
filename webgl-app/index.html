@@ -37,9 +37,9 @@
         <label for="rotation">Rotation Y:</label>
         <input type="range" id="rotation" min="0" max="360" step="1" value="0">
     </div>
-    <script type="module">import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js';
-        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
-        import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/webxr/ARButton.js';
+    <script type="module">import * as THREE from 'https://unpkg.com/three@0.128.0/build/three.module.js';
+        import { GLTFLoader } from 'https://unpkg.com/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
+        import { ARButton } from 'https://unpkg.com/three@0.128.0/examples/jsm/webxr/ARButton.js';
 
         let scene, camera, renderer, controller, reticle;
         let model, isPlaced = false;
