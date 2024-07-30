@@ -17,7 +17,7 @@
             z-index: 10;
         }
 
-            #controls label {
+            #controls label, #controls button {
                 margin-right: 10px;
             }
 
@@ -34,6 +34,7 @@
         <input type="range" id="rotation" min="0" max="360" step="1" value="0">
         <label for="positionY">Position Y:</label>
         <input type="range" id="positionY" min="-2" max="2" step="0.1" value="0">
+        <button id="modeToggle">Place Mode</button>
     </div>
 
     <a-scene embedded arjs>
@@ -50,10 +51,12 @@
     <script>// Marker visibility handling
         const marker = document.querySelector('#hiroMarker');
         const modelEntity = document.querySelector('#modelEntity');
+        const modeToggleButton = document.getElementById('modeToggle');
 
         let lastPosition = new THREE.Vector3();
         let lastRotation = new THREE.Euler();
         let markerFound = false;
+        let isPlaceMode = false;
         let markerLostTimeout;
 
         marker.addEventListener('markerFound', () => {
@@ -63,16 +66,19 @@
                 modelEntity.setAttribute('visible', true);
             }
             markerFound = true;
+            if (!isPlaceMode) {
+                // Update last known position when in detect mode
+                lastPosition.copy(modelEntity.object3D.position);
+                lastRotation.copy(modelEntity.object3D.rotation);
+            }
         });
 
         marker.addEventListener('markerLost', () => {
             console.log('Marker lost!');
             markerFound = false;
             markerLostTimeout = setTimeout(() => {
-                if (!markerFound) {
-                    lastPosition.copy(modelEntity.object3D.position);
-                    lastRotation.copy(modelEntity.object3D.rotation);
-                    modelEntity.setAttribute('visible', true); // Keep the model visible
+                if (!markerFound && !isPlaceMode) {
+                    modelEntity.setAttribute('visible', false);
                 }
             }, 1000); // Delay before considering the marker fully lost
         });
@@ -80,7 +86,7 @@
         // Smoothing transition between old and new positions/rotations
         AFRAME.registerComponent('smooth-move', {
             tick: function () {
-                if (!markerFound) {
+                if (!markerFound && isPlaceMode) {
                     modelEntity.object3D.position.lerp(lastPosition, 0.1); // Smooth transition
                     modelEntity.object3D.rotation.set(
                         THREE.MathUtils.lerp(modelEntity.object3D.rotation.x, lastRotation.x, 0.1),
@@ -91,6 +97,21 @@
             }
         });
         modelEntity.setAttribute('smooth-move', '');
+
+        // Mode Toggle
+        modeToggleButton.addEventListener('click', () => {
+            isPlaceMode = !isPlaceMode;
+            modeToggleButton.textContent = isPlaceMode ? 'Detect Mode' : 'Place Mode';
+            if (isPlaceMode) {
+                // Set the model's last known position and keep it visible
+                lastPosition.copy(modelEntity.object3D.position);
+                lastRotation.copy(modelEntity.object3D.rotation);
+                modelEntity.setAttribute('visible', true);
+            } else if (!markerFound) {
+                // Hide the model if switching to detect mode and marker not found
+                modelEntity.setAttribute('visible', false);
+            }
+        });
 
         // Sliders for scale, rotation, and position
         const scaleSlider = document.getElementById('scale');
