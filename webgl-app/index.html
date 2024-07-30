@@ -9,7 +9,7 @@
 <body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs>
         <a-marker preset="hiro" id="hiroMarker">
-            <a-entity id="modelEntity" gltf-model="#model" position="0 0 0" scale="0.25 0.25 0.25" rotation="0 0 0"></a-entity>
+            <a-entity id="modelEntity" gltf-model="#model" position="0 0 0" scale="0.25 0.25 0.25" rotation="0 0 0" gesture-handler></a-entity>
         </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
@@ -18,18 +18,71 @@
         <a-asset-item id="model" src="model.gltf"></a-asset-item>
     </a-assets>
 
-    <script>// Listen for marker found and lost events
+    <script>// Marker visibility handling
         const marker = document.querySelector('#hiroMarker');
         const modelEntity = document.querySelector('#modelEntity');
 
         marker.addEventListener('markerFound', (event) => {
             console.log('Marker found!');
-            modelEntity.setAttribute('visible', true); // Ensure the model is visible
+            modelEntity.setAttribute('visible', true);
         });
 
         marker.addEventListener('markerLost', (event) => {
             console.log('Marker lost!');
-            modelEntity.setAttribute('visible', false); // Optionally hide the model
+            modelEntity.setAttribute('visible', false);
+        });
+
+        // Gesture handler component
+        AFRAME.registerComponent('gesture-handler', {
+            schema: {
+                enabled: { default: true }
+            },
+            init: function () {
+                this.handleScale = this.handleScale.bind(this);
+                this.handleRotation = this.handleRotation.bind(this);
+                this.handleMovement = this.handleMovement.bind(this);
+                this.startPosition = null;
+                this.startRotation = null;
+                this.isDragging = false;
+            },
+            play: function () {
+                this.el.sceneEl.addEventListener('onefingermove', this.handleMovement);
+                this.el.sceneEl.addEventListener('twofingermove', this.handleRotation);
+                this.el.sceneEl.addEventListener('twofingerscale', this.handleScale);
+            },
+            pause: function () {
+                this.el.sceneEl.removeEventListener('onefingermove', this.handleMovement);
+                this.el.sceneEl.removeEventListener('twofingermove', this.handleRotation);
+                this.el.sceneEl.removeEventListener('twofingerscale', this.handleScale);
+            },
+            handleScale: function (event) {
+                var scale = this.el.getAttribute('scale');
+                scale.x *= event.detail.spreadChange;
+                scale.y *= event.detail.spreadChange;
+                scale.z *= event.detail.spreadChange;
+                this.el.setAttribute('scale', scale);
+            },
+            handleRotation: function (event) {
+                var rotation = this.el.getAttribute('rotation');
+                rotation.y += event.detail.angleChange;
+                this.el.setAttribute('rotation', rotation);
+            },
+            handleMovement: function (event) {
+                if (!this.isDragging) {
+                    this.startPosition = event.detail.position;
+                    this.startRotation = this.el.getAttribute('rotation');
+                    this.isDragging = true;
+                }
+                var newPosition = event.detail.position;
+                var deltaX = newPosition.x - this.startPosition.x;
+                var deltaY = newPosition.y - this.startPosition.y;
+
+                var rotation = this.startRotation;
+                rotation.y += deltaX * 0.5; // Adjust this factor to control sensitivity
+                rotation.x -= deltaY * 0.5;
+
+                this.el.setAttribute('rotation', rotation);
+            }
         });</script>
 </body>
 </html>
