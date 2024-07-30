@@ -8,8 +8,8 @@
 </head>
 <body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs>
-        <a-marker preset="hiro">
-            <a-entity gltf-model="#model" position="0 0 0" scale="0.1 0.1 0.1" rotation="0 0 0"></a-entity>
+        <a-marker preset="hiro" id="hiroMarker">
+            <a-entity id="modelEntity" gltf-model="#model" position="0 0 0" scale="0.25 0.25 0.25" rotation="0 0 0"></a-entity>
         </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
@@ -17,5 +17,19 @@
     <a-assets>
         <a-asset-item id="model" src="model.gltf"></a-asset-item>
     </a-assets>
+
+    <script>// Listen for marker found and lost events
+        const marker = document.querySelector('#hiroMarker');
+        const modelEntity = document.querySelector('#modelEntity');
+
+        marker.addEventListener('markerFound', (event) => {
+            console.log('Marker found!');
+            modelEntity.setAttribute('visible', true); // Ensure the model is visible
+        });
+
+        marker.addEventListener('markerLost', (event) => {
+            console.log('Marker lost!');
+            modelEntity.setAttribute('visible', false); // Optionally hide the model
+        });</script>
 </body>
 </html>
