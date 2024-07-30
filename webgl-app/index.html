@@ -38,10 +38,11 @@
         <input type="range" id="rotation" min="0" max="360" step="1" value="0">
         <button id="placeButton">Place Object</button>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://threejs.org/examples/jsm/webxr/ARButton.js"></script>
-    <script>let scene, camera, renderer;
+    <script type="module">import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js';
+        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
+        import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/webxr/ARButton.js';
+
+        let scene, camera, renderer;
         let controller, reticle;
         let model, isPlaced = false;
 
@@ -55,7 +56,7 @@
         document.body.appendChild(renderer.domElement);
 
         // AR Button
-        document.body.appendChild(THREE.ARButton.createButton(renderer));
+        document.body.appendChild(ARButton.createButton(renderer));
 
         // Lights
         const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
@@ -70,7 +71,7 @@
         scene.add(reticle);
 
         // Load Model (e.g., glTF)
-        const loader = new THREE.GLTFLoader();
+        const loader = new GLTFLoader();
         loader.load('model.gltf', (gltf) => {
             model = gltf.scene;
             model.scale.set(0.5, 0.5, 0.5);
