@@ -14,7 +14,7 @@
             background: rgba(255, 255, 255, 0.8);
             padding: 10px;
             border-radius: 10px;
-            z-index: 10; /* Ensure controls are on top */
+            z-index: 10;
         }
 
             #controls label {
@@ -51,22 +51,46 @@
         const marker = document.querySelector('#hiroMarker');
         const modelEntity = document.querySelector('#modelEntity');
 
-        let lastPosition = { x: 0, y: 0, z: 0 };
-        let lastRotation = { x: 0, y: 0, z: 0 };
+        let lastPosition = new THREE.Vector3();
+        let lastRotation = new THREE.Euler();
         let markerFound = false;
+        let markerLostTimeout;
 
         marker.addEventListener('markerFound', () => {
             console.log('Marker found!');
-            modelEntity.setAttribute('visible', true);
+            clearTimeout(markerLostTimeout); // Clear the marker lost timeout
+            if (!markerFound) {
+                modelEntity.setAttribute('visible', true);
+            }
             markerFound = true;
         });
 
         marker.addEventListener('markerLost', () => {
             console.log('Marker lost!');
             markerFound = false;
-            lastPosition = modelEntity.object3D.position.clone();
-            lastRotation = modelEntity.object3D.rotation.clone();
+            markerLostTimeout = setTimeout(() => {
+                if (!markerFound) {
+                    lastPosition.copy(modelEntity.object3D.position);
+                    lastRotation.copy(modelEntity.object3D.rotation);
+                    modelEntity.setAttribute('visible', true); // Keep the model visible
+                }
+            }, 1000); // Delay before considering the marker fully lost
         });
+
+        // Smoothing transition between old and new positions/rotations
+        AFRAME.registerComponent('smooth-move', {
+            tick: function () {
+                if (!markerFound) {
+                    modelEntity.object3D.position.lerp(lastPosition, 0.1); // Smooth transition
+                    modelEntity.object3D.rotation.set(
+                        THREE.MathUtils.lerp(modelEntity.object3D.rotation.x, lastRotation.x, 0.1),
+                        THREE.MathUtils.lerp(modelEntity.object3D.rotation.y, lastRotation.y, 0.1),
+                        THREE.MathUtils.lerp(modelEntity.object3D.rotation.z, lastRotation.z, 0.1)
+                    );
+                }
+            }
+        });
+        modelEntity.setAttribute('smooth-move', '');
 
         // Sliders for scale, rotation, and position
         const scaleSlider = document.getElementById('scale');
@@ -86,17 +110,6 @@
         positionYSlider.addEventListener('input', () => {
             const positionY = positionYSlider.value;
             modelEntity.setAttribute('position', { x: lastPosition.x, y: positionY, z: lastPosition.z });
-        });
-
-        // Maintain model position and rotation after marker is lost
-        AFRAME.registerComponent('maintain-position', {
-            tick: function () {
-                if (!markerFound) {
-                    modelEntity.object3D.position.copy(lastPosition);
-                    modelEntity.object3D.rotation.copy(lastRotation);
-                }
-            }
-        });
-        modelEntity.setAttribute('maintain-position', '');</script>
+        });</script>
 </body>
 </html>
