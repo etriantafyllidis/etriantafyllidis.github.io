@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markerless AR</title>
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-        }
-
+        body { margin: 0; overflow: hidden; }
         #controls {
             position: absolute;
             bottom: 20px;
@@ -20,14 +16,12 @@
             border-radius: 10px;
             z-index: 10;
         }
-
-            #controls label, #controls button {
-                margin-right: 10px;
-            }
-
-            #controls input[type="range"] {
-                width: calc(100% - 100px);
-            }
+        #controls label, #controls button {
+            margin-right: 10px;
+        }
+        #controls input[type="range"] {
+            width: calc(100% - 100px);
+        }
     </style>
 </head>
 <body>
@@ -37,9 +31,10 @@
         <label for="rotation">Rotation Y:</label>
         <input type="range" id="rotation" min="0" max="360" step="1" value="0">
     </div>
-    <script type="module">import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.167.0/three.cjs';
-        import { GLTFLoader } from 'https://unpkg.com/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
-        import { ARButton } from 'https://unpkg.com/three@0.128.0/examples/jsm/webxr/ARButton.js';
+    <script type="module">
+        import * as THREE from './libs/three/build/three.module.js';
+        import { GLTFLoader } from './libs/three/examples/jsm/loaders/GLTFLoader.js';
+        import { ARButton } from './libs/three/examples/jsm/webxr/ARButton.js';
 
         let scene, camera, renderer, controller, reticle;
         let model, isPlaced = false;
@@ -70,7 +65,7 @@
 
         // Load model
         const loader = new GLTFLoader();
-        loader.load('model.gltf', (gltf) => {
+        loader.load('./models/model.gltf', (gltf) => {
             model = gltf.scene;
             model.scale.set(0.5, 0.5, 0.5);
             model.visible = false;
@@ -151,6 +146,7 @@
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
-        });</script>
+        });
+    </script>
 </body>
 </html>
