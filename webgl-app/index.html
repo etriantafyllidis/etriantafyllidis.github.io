@@ -5,11 +5,39 @@
     <title>AR Model Viewer</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.3.2/aframe/build/aframe-ar.min.js"></script>
+    <style>
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+            #controls label {
+                margin-right: 10px;
+            }
+
+            #controls input[type="range"] {
+                width: calc(100% - 100px);
+            }
+    </style>
 </head>
 <body style="margin: 0; overflow: hidden;">
+    <div id="controls">
+        <label for="scale">Scale:</label>
+        <input type="range" id="scale" min="0.1" max="2" step="0.1" value="1">
+        <label for="rotation">Rotation Y:</label>
+        <input type="range" id="rotation" min="0" max="360" step="1" value="0">
+        <label for="positionY">Position Y:</label>
+        <input type="range" id="positionY" min="-2" max="2" step="0.1" value="0">
+    </div>
+
     <a-scene embedded arjs>
         <a-marker preset="hiro" id="hiroMarker">
-            <a-entity id="modelEntity" gltf-model="#model" position="0 0 0" scale="0.25 0.25 0.25" rotation="0 0 0" gesture-handler></a-entity>
+            <a-entity id="modelEntity" gltf-model="#model" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
         </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
@@ -26,62 +54,48 @@
         let lastRotation = { x: 0, y: 0, z: 0 };
         let markerFound = false;
 
-        marker.addEventListener('markerFound', (event) => {
+        marker.addEventListener('markerFound', () => {
             console.log('Marker found!');
             modelEntity.setAttribute('visible', true);
             markerFound = true;
         });
 
-        marker.addEventListener('markerLost', (event) => {
+        marker.addEventListener('markerLost', () => {
             console.log('Marker lost!');
             markerFound = false;
             lastPosition = modelEntity.object3D.position.clone();
             lastRotation = modelEntity.object3D.rotation.clone();
         });
 
-        AFRAME.registerComponent('gesture-handler', {
-            schema: {
-                enabled: { default: true }
-            },
-            init: function () {
-                this.handleScale = this.handleScale.bind(this);
-                this.handleRotation = this.handleRotation.bind(this);
-                this.handleMovement = this.handleMovement.bind(this);
-            },
+        // Sliders for scale, rotation, and position
+        const scaleSlider = document.getElementById('scale');
+        const rotationSlider = document.getElementById('rotation');
+        const positionYSlider = document.getElementById('positionY');
+
+        scaleSlider.addEventListener('input', () => {
+            const scale = scaleSlider.value;
+            modelEntity.setAttribute('scale', { x: scale, y: scale, z: scale });
+        });
+
+        rotationSlider.addEventListener('input', () => {
+            const rotationY = rotationSlider.value;
+            modelEntity.setAttribute('rotation', { x: lastRotation.x, y: rotationY, z: lastRotation.z });
+        });
+
+        positionYSlider.addEventListener('input', () => {
+            const positionY = positionYSlider.value;
+            modelEntity.setAttribute('position', { x: lastPosition.x, y: positionY, z: lastPosition.z });
+        });
+
+        // Maintain model position and rotation after marker is lost
+        AFRAME.registerComponent('maintain-position', {
             tick: function () {
                 if (!markerFound) {
                     modelEntity.object3D.position.copy(lastPosition);
                     modelEntity.object3D.rotation.copy(lastRotation);
                 }
-            },
-            play: function () {
-                this.el.sceneEl.addEventListener('onefingermove', this.handleMovement);
-                this.el.sceneEl.addEventListener('twofingermove', this.handleRotation);
-                this.el.sceneEl.addEventListener('twofingerscale', this.handleScale);
-            },
-            pause: function () {
-                this.el.sceneEl.removeEventListener('onefingermove', this.handleMovement);
-                this.el.sceneEl.removeEventListener('twofingermove', this.handleRotation);
-                this.el.sceneEl.removeEventListener('twofingerscale', this.handleScale);
-            },
-            handleScale: function (event) {
-                var scale = modelEntity.getAttribute('scale');
-                scale.x *= event.detail.spreadChange;
-                scale.y *= event.detail.spreadChange;
-                scale.z *= event.detail.spreadChange;
-                modelEntity.setAttribute('scale', scale);
-            },
-            handleRotation: function (event) {
-                var rotation = modelEntity.getAttribute('rotation');
-                rotation.y += event.detail.angleChange;
-                modelEntity.setAttribute('rotation', rotation);
-            },
-            handleMovement: function (event) {
-                var rotation = modelEntity.getAttribute('rotation');
-                rotation.y += event.detail.positionChange.x * 0.5;
-                rotation.x -= event.detail.positionChange.y * 0.5;
-                modelEntity.setAttribute('rotation', rotation);
             }
-        });</script>
+        });
+        modelEntity.setAttribute('maintain-position', '');</script>
 </body>
 </html>
