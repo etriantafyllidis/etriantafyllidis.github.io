@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markerless AR</title>
     <style>
-        body { margin: 0; overflow: hidden; }
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
         #controls {
             position: absolute;
             bottom: 20px;
@@ -16,12 +20,14 @@
             border-radius: 10px;
             z-index: 10;
         }
-        #controls label, #controls button {
-            margin-right: 10px;
-        }
-        #controls input[type="range"] {
-            width: calc(100% - 100px);
-        }
+
+            #controls label, #controls button {
+                margin-right: 10px;
+            }
+
+            #controls input[type="range"] {
+                width: calc(100% - 100px);
+            }
     </style>
 </head>
 <body>
@@ -32,9 +38,9 @@
         <input type="range" id="rotation" min="0" max="360" step="1" value="0">
     </div>
     <script type="module">
-        import * as THREE from './libs/three/build/three.module.js';
-        import { GLTFLoader } from './libs/three/examples/jsm/loaders/GLTFLoader.js';
-        import { ARButton } from './libs/three/examples/jsm/webxr/ARButton.js';
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.117.1/build/three.module.js';
+        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.117.1/examples/jsm/loaders/GLTFLoader.js';
+        import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.117.1/examples/jsm/webxr/ARButton.js';;
 
         let scene, camera, renderer, controller, reticle;
         let model, isPlaced = false;
@@ -146,7 +152,6 @@
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
+        });</script>
 </body>
 </html>
