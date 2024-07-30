@@ -22,17 +22,23 @@
         const marker = document.querySelector('#hiroMarker');
         const modelEntity = document.querySelector('#modelEntity');
 
+        let lastPosition = { x: 0, y: 0, z: 0 };
+        let lastRotation = { x: 0, y: 0, z: 0 };
+        let markerFound = false;
+
         marker.addEventListener('markerFound', (event) => {
             console.log('Marker found!');
             modelEntity.setAttribute('visible', true);
+            markerFound = true;
         });
 
         marker.addEventListener('markerLost', (event) => {
             console.log('Marker lost!');
-            modelEntity.setAttribute('visible', false);
+            markerFound = false;
+            lastPosition = modelEntity.object3D.position.clone();
+            lastRotation = modelEntity.object3D.rotation.clone();
         });
 
-        // Gesture handler component
         AFRAME.registerComponent('gesture-handler', {
             schema: {
                 enabled: { default: true }
@@ -41,9 +47,12 @@
                 this.handleScale = this.handleScale.bind(this);
                 this.handleRotation = this.handleRotation.bind(this);
                 this.handleMovement = this.handleMovement.bind(this);
-                this.startPosition = null;
-                this.startRotation = null;
-                this.isDragging = false;
+            },
+            tick: function () {
+                if (!markerFound) {
+                    modelEntity.object3D.position.copy(lastPosition);
+                    modelEntity.object3D.rotation.copy(lastRotation);
+                }
             },
             play: function () {
                 this.el.sceneEl.addEventListener('onefingermove', this.handleMovement);
@@ -56,32 +65,22 @@
                 this.el.sceneEl.removeEventListener('twofingerscale', this.handleScale);
             },
             handleScale: function (event) {
-                var scale = this.el.getAttribute('scale');
+                var scale = modelEntity.getAttribute('scale');
                 scale.x *= event.detail.spreadChange;
                 scale.y *= event.detail.spreadChange;
                 scale.z *= event.detail.spreadChange;
-                this.el.setAttribute('scale', scale);
+                modelEntity.setAttribute('scale', scale);
             },
             handleRotation: function (event) {
-                var rotation = this.el.getAttribute('rotation');
+                var rotation = modelEntity.getAttribute('rotation');
                 rotation.y += event.detail.angleChange;
-                this.el.setAttribute('rotation', rotation);
+                modelEntity.setAttribute('rotation', rotation);
             },
             handleMovement: function (event) {
-                if (!this.isDragging) {
-                    this.startPosition = event.detail.position;
-                    this.startRotation = this.el.getAttribute('rotation');
-                    this.isDragging = true;
-                }
-                var newPosition = event.detail.position;
-                var deltaX = newPosition.x - this.startPosition.x;
-                var deltaY = newPosition.y - this.startPosition.y;
-
-                var rotation = this.startRotation;
-                rotation.y += deltaX * 0.5; // Adjust this factor to control sensitivity
-                rotation.x -= deltaY * 0.5;
-
-                this.el.setAttribute('rotation', rotation);
+                var rotation = modelEntity.getAttribute('rotation');
+                rotation.y += event.detail.positionChange.x * 0.5;
+                rotation.x -= event.detail.positionChange.y * 0.5;
+                modelEntity.setAttribute('rotation', rotation);
             }
         });</script>
 </body>
