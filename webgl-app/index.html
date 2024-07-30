@@ -38,8 +38,8 @@
     </div>
 
     <a-scene embedded arjs>
-        <a-marker preset="hiro" id="hiroMarker">
-            <a-entity id="modelEntity" gltf-model="#model" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
+        <a-marker preset="hiro" id="hiroMarker" emitevents="true">
+            <a-entity id="modelEntity" gltf-model="#model" visible="false"></a-entity>
         </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
@@ -48,48 +48,42 @@
         <a-asset-item id="model" src="model.gltf"></a-asset-item>
     </a-assets>
 
-    <script>// Marker visibility handling
-        const marker = document.querySelector('#hiroMarker');
+    <script>const marker = document.querySelector('#hiroMarker');
         const modelEntity = document.querySelector('#modelEntity');
         const modeToggleButton = document.getElementById('modeToggle');
 
         let lastPosition = new THREE.Vector3();
         let lastRotation = new THREE.Euler();
-        let markerFound = false;
         let isPlaceMode = false;
-        let markerLostTimeout;
+        let markerFound = false;
+
+        // Set the mode button and initial mode
+        modeToggleButton.textContent = 'Place Mode';
 
         marker.addEventListener('markerFound', () => {
-            if (!isPlaceMode) {
-                console.log('Marker found in Detect Mode!');
-                clearTimeout(markerLostTimeout); // Clear the marker lost timeout
+            if (!markerFound && !isPlaceMode) {
+                console.log('Marker found!');
                 markerFound = true;
                 modelEntity.setAttribute('visible', true);
             }
         });
 
         marker.addEventListener('markerLost', () => {
-            if (!isPlaceMode) {
-                console.log('Marker lost in Detect Mode!');
+            if (markerFound && !isPlaceMode) {
+                console.log('Marker lost!');
                 markerFound = false;
-                markerLostTimeout = setTimeout(() => {
-                    if (!markerFound) {
-                        modelEntity.setAttribute('visible', false);
-                    }
-                }, 1000); // Delay before considering the marker fully lost
+                lastPosition.copy(modelEntity.object3D.position);
+                lastRotation.copy(modelEntity.object3D.rotation);
             }
         });
 
-        // Smoothing transition and maintaining position in Place Mode
+        // Smoothing and position maintenance
         AFRAME.registerComponent('smooth-move', {
             tick: function () {
-                if (isPlaceMode || !markerFound) {
-                    modelEntity.object3D.position.lerp(lastPosition, 0.1); // Smooth transition
-                    modelEntity.object3D.rotation.set(
-                        THREE.MathUtils.lerp(modelEntity.object3D.rotation.x, lastRotation.x, 0.1),
-                        THREE.MathUtils.lerp(modelEntity.object3D.rotation.y, lastRotation.y, 0.1),
-                        THREE.MathUtils.lerp(modelEntity.object3D.rotation.z, lastRotation.z, 0.1)
-                    );
+                if (isPlaceMode) {
+                    // Keep the model at the last known position and rotation
+                    modelEntity.object3D.position.copy(lastPosition);
+                    modelEntity.object3D.rotation.copy(lastRotation);
                 }
             }
         });
@@ -99,19 +93,17 @@
         modeToggleButton.addEventListener('click', () => {
             isPlaceMode = !isPlaceMode;
             modeToggleButton.textContent = isPlaceMode ? 'Detect Mode' : 'Place Mode';
-
             if (isPlaceMode) {
                 console.log('Switched to Place Mode');
-                // Set the model's last known position and keep it visible
+                modelEntity.setAttribute('visible', true);
+                // Stop using marker updates, maintain current position
                 lastPosition.copy(modelEntity.object3D.position);
                 lastRotation.copy(modelEntity.object3D.rotation);
-                modelEntity.setAttribute('visible', true);
             } else {
                 console.log('Switched to Detect Mode');
-                // In Detect mode, the model visibility depends on marker detection
-                if (!markerFound) {
-                    modelEntity.setAttribute('visible', false);
-                }
+                // Reset to default AR.js tracking behavior
+                markerFound = false;
+                modelEntity.setAttribute('visible', false);
             }
         });
 
@@ -127,12 +119,14 @@
 
         rotationSlider.addEventListener('input', () => {
             const rotationY = rotationSlider.value;
-            modelEntity.setAttribute('rotation', { x: lastRotation.x, y: rotationY, z: lastRotation.z });
+            lastRotation.y = THREE.Math.degToRad(rotationY);
+            modelEntity.object3D.rotation.copy(lastRotation);
         });
 
         positionYSlider.addEventListener('input', () => {
             const positionY = positionYSlider.value;
-            modelEntity.setAttribute('position', { x: lastPosition.x, y: positionY, z: lastPosition.z });
+            lastPosition.y = parseFloat(positionY);
+            modelEntity.object3D.position.copy(lastPosition);
         });</script>
 </body>
 </html>
