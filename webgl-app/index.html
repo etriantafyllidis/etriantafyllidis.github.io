@@ -60,33 +60,30 @@
         let markerLostTimeout;
 
         marker.addEventListener('markerFound', () => {
-            console.log('Marker found!');
-            clearTimeout(markerLostTimeout); // Clear the marker lost timeout
-            if (!markerFound) {
-                modelEntity.setAttribute('visible', true);
-            }
-            markerFound = true;
             if (!isPlaceMode) {
-                // Update last known position when in detect mode
-                lastPosition.copy(modelEntity.object3D.position);
-                lastRotation.copy(modelEntity.object3D.rotation);
+                console.log('Marker found in Detect Mode!');
+                clearTimeout(markerLostTimeout); // Clear the marker lost timeout
+                markerFound = true;
+                modelEntity.setAttribute('visible', true);
             }
         });
 
         marker.addEventListener('markerLost', () => {
-            console.log('Marker lost!');
-            markerFound = false;
-            markerLostTimeout = setTimeout(() => {
-                if (!markerFound && !isPlaceMode) {
-                    modelEntity.setAttribute('visible', false);
-                }
-            }, 1000); // Delay before considering the marker fully lost
+            if (!isPlaceMode) {
+                console.log('Marker lost in Detect Mode!');
+                markerFound = false;
+                markerLostTimeout = setTimeout(() => {
+                    if (!markerFound) {
+                        modelEntity.setAttribute('visible', false);
+                    }
+                }, 1000); // Delay before considering the marker fully lost
+            }
         });
 
-        // Smoothing transition between old and new positions/rotations
+        // Smoothing transition and maintaining position in Place Mode
         AFRAME.registerComponent('smooth-move', {
             tick: function () {
-                if (!markerFound && isPlaceMode) {
+                if (isPlaceMode || !markerFound) {
                     modelEntity.object3D.position.lerp(lastPosition, 0.1); // Smooth transition
                     modelEntity.object3D.rotation.set(
                         THREE.MathUtils.lerp(modelEntity.object3D.rotation.x, lastRotation.x, 0.1),
@@ -102,14 +99,19 @@
         modeToggleButton.addEventListener('click', () => {
             isPlaceMode = !isPlaceMode;
             modeToggleButton.textContent = isPlaceMode ? 'Detect Mode' : 'Place Mode';
+
             if (isPlaceMode) {
+                console.log('Switched to Place Mode');
                 // Set the model's last known position and keep it visible
                 lastPosition.copy(modelEntity.object3D.position);
                 lastRotation.copy(modelEntity.object3D.rotation);
                 modelEntity.setAttribute('visible', true);
-            } else if (!markerFound) {
-                // Hide the model if switching to detect mode and marker not found
-                modelEntity.setAttribute('visible', false);
+            } else {
+                console.log('Switched to Detect Mode');
+                // In Detect mode, the model visibility depends on marker detection
+                if (!markerFound) {
+                    modelEntity.setAttribute('visible', false);
+                }
             }
         });
 
