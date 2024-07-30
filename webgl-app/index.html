@@ -39,8 +39,8 @@
         <button id="placeButton">Place Object</button>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@webxr-input-profiles/motion-controllers@1.0.0/dist/motion-controllers.module.js"></script>
     <script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://threejs.org/examples/jsm/webxr/ARButton.js"></script>
     <script>let scene, camera, renderer;
         let controller, reticle;
         let model, isPlaced = false;
@@ -55,7 +55,7 @@
         document.body.appendChild(renderer.domElement);
 
         // AR Button
-        document.body.appendChild(THREE.WebXRUtils.createButton(renderer));
+        document.body.appendChild(THREE.ARButton.createButton(renderer));
 
         // Lights
         const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
