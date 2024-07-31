@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markerless AR</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-        }
+Working Script (Hiro)
 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AR Model Viewer</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.3.2/aframe/build/aframe-ar.min.js"></script>
+    <style>
         #controls {
             position: absolute;
             bottom: 20px;
@@ -30,128 +29,107 @@
             }
     </style>
 </head>
-<body>
+<body style="margin: 0; overflow: hidden;">
     <div id="controls">
         <label for="scale">Scale:</label>
         <input type="range" id="scale" min="0.1" max="2" step="0.1" value="1">
         <label for="rotation">Rotation Y:</label>
         <input type="range" id="rotation" min="0" max="360" step="1" value="0">
+        <label for="positionY">Position Y:</label>
+        <input type="range" id="positionY" min="-2" max="2" step="0.1" value="0">
+        <button id="modeToggle">Place Mode</button>
     </div>
-    <script type="module">
-        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.117.1/build/three.module.js';
-        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.117.1/examples/jsm/loaders/GLTFLoader.js';
-        import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.117.1/examples/jsm/webxr/ARButton.js';;
 
-        let scene, camera, renderer, controller, reticle;
-        let model, isPlaced = false;
+    <a-scene embedded arjs>
+        <a-marker preset="hiro" id="hiroMarker" emitevents="true">
+            <a-entity id="modelEntity" gltf-model="#model" visible="false"></a-entity>
+        </a-marker>
+        <a-entity camera></a-entity>
+    </a-scene>
 
-        // Initialize scene, camera, and renderer
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.xr.enabled = true;
-        document.body.appendChild(renderer.domElement);
+    <a-assets>
+        <a-asset-item id="model" src="model.gltf"></a-asset-item>
+    </a-assets>
 
-        // AR Button
-        document.body.appendChild(ARButton.createButton(renderer, { requiredFeatures: ['hit-test'] }));
+    <script>const marker = document.querySelector('#hiroMarker');
+        const modelEntity = document.querySelector('#modelEntity');
+        const modeToggleButton = document.getElementById('modeToggle');
 
-        // Lighting
-        const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
-        scene.add(light);
+        let lastPosition = new THREE.Vector3();
+        let lastRotation = new THREE.Euler();
+        let isPlaceMode = false;
+        let markerFound = false;
 
-        // Reticle for hit testing
-        const geometry = new THREE.RingGeometry(0.15, 0.2, 32).rotateX(-Math.PI / 2);
-        const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        reticle = new THREE.Mesh(geometry, material);
-        reticle.matrixAutoUpdate = false;
-        reticle.visible = false;
-        scene.add(reticle);
+        // Set the mode button and initial mode
+        modeToggleButton.textContent = 'Place Mode';
 
-        // Load model
-        const loader = new GLTFLoader();
-        loader.load('./models/model.gltf', (gltf) => {
-            model = gltf.scene;
-            model.scale.set(0.5, 0.5, 0.5);
-            model.visible = false;
-            scene.add(model);
+        marker.addEventListener('markerFound', () => {
+            if (!markerFound && !isPlaceMode) {
+                console.log('Marker found!');
+                markerFound = true;
+                modelEntity.setAttribute('visible', true);
+            }
         });
 
-        // Controller
-        controller = renderer.xr.getController(0);
-        controller.addEventListener('select', onSelect);
-        scene.add(controller);
-
-        let hitTestSource = null;
-        let hitTestSourceRequested = false;
-
-        function onSelect() {
-            if (!isPlaced) {
-                // Place model at reticle's position
-                model.position.setFromMatrixPosition(reticle.matrix);
-                model.visible = true;
-                isPlaced = true;
+        marker.addEventListener('markerLost', () => {
+            if (markerFound && !isPlaceMode) {
+                console.log('Marker lost!');
+                markerFound = false;
+                lastPosition.copy(modelEntity.object3D.position);
+                lastRotation.copy(modelEntity.object3D.rotation);
             }
-        }
-
-        // Animation loop
-        renderer.setAnimationLoop((timestamp, frame) => {
-            if (frame) {
-                const referenceSpace = renderer.xr.getReferenceSpace();
-                const session = renderer.xr.getSession();
-
-                if (!hitTestSourceRequested) {
-                    session.requestReferenceSpace('viewer').then((referenceSpace) => {
-                        session.requestHitTestSource({ space: referenceSpace }).then((source) => {
-                            hitTestSource = source;
-                        });
-                    });
-
-                    session.addEventListener('end', () => {
-                        hitTestSourceRequested = false;
-                        hitTestSource = null;
-                    });
-
-                    hitTestSourceRequested = true;
-                }
-
-                if (hitTestSource) {
-                    const hitTestResults = frame.getHitTestResults(hitTestSource);
-                    if (hitTestResults.length) {
-                        const hit = hitTestResults[0];
-                        const referenceSpace = renderer.xr.getReferenceSpace();
-                        const pose = hit.getPose(referenceSpace);
-
-                        reticle.visible = true;
-                        reticle.matrix.fromArray(pose.transform.matrix);
-                    } else {
-                        reticle.visible = false;
-                    }
-                }
-            }
-
-            renderer.render(scene, camera);
         });
 
-        // UI controls
+        // Smoothing and position maintenance
+        AFRAME.registerComponent('smooth-move', {
+            tick: function () {
+                if (isPlaceMode) {
+                    // Keep the model at the last known position and rotation
+                    modelEntity.object3D.position.copy(lastPosition);
+                    modelEntity.object3D.rotation.copy(lastRotation);
+                }
+            }
+        });
+        modelEntity.setAttribute('smooth-move', '');
+
+        // Mode Toggle
+        modeToggleButton.addEventListener('click', () => {
+            isPlaceMode = !isPlaceMode;
+            modeToggleButton.textContent = isPlaceMode ? 'Detect Mode' : 'Place Mode';
+            if (isPlaceMode) {
+                console.log('Switched to Place Mode');
+                modelEntity.setAttribute('visible', true);
+                // Stop using marker updates, maintain current position
+                lastPosition.copy(modelEntity.object3D.position);
+                lastRotation.copy(modelEntity.object3D.rotation);
+            } else {
+                console.log('Switched to Detect Mode');
+                // Reset to default AR.js tracking behavior
+                markerFound = false;
+                modelEntity.setAttribute('visible', false);
+            }
+        });
+
+        // Sliders for scale, rotation, and position
         const scaleSlider = document.getElementById('scale');
         const rotationSlider = document.getElementById('rotation');
+        const positionYSlider = document.getElementById('positionY');
 
         scaleSlider.addEventListener('input', () => {
             const scale = scaleSlider.value;
-            if (model) model.scale.set(scale, scale, scale);
+            modelEntity.setAttribute('scale', { x: scale, y: scale, z: scale });
         });
 
         rotationSlider.addEventListener('input', () => {
-            const rotationY = THREE.Math.degToRad(rotationSlider.value);
-            if (model) model.rotation.y = rotationY;
+            const rotationY = rotationSlider.value;
+            lastRotation.y = THREE.Math.degToRad(rotationY);
+            modelEntity.object3D.rotation.copy(lastRotation);
         });
 
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+        positionYSlider.addEventListener('input', () => {
+            const positionY = positionYSlider.value;
+            lastPosition.y = parseFloat(positionY);
+            modelEntity.object3D.position.copy(lastPosition);
         });</script>
 </body>
 </html>
