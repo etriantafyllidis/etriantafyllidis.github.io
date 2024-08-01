@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-    <script src="Build/a.loader.js"></script>
+    <script src="Build/test.loader.js"></script>
     <script>
             var container = document.querySelector("#unity-container");
             var canvas = document.querySelector("#unity-canvas");
@@ -73,9 +73,9 @@
                 document.getElementById("startWebcamDiv").style.display = "none";
 
                 createUnityInstance(document.querySelector("#unity-canvas"), {
-                    dataUrl: "Build/a.data",
-                    frameworkUrl: "Build/a.framework.js",
-                    codeUrl: "Build/a.wasm",
+                    dataUrl: "Build/test.data",
+                    frameworkUrl: "Build/test.framework.js",
+                    codeUrl: "Build/test.wasm",
                     streamingAssetsUrl: "StreamingAssets",
                     companyName: "DefaultCompany",
                     productName: "ImmersiveScan",
