@@ -19,7 +19,7 @@ Education
 
 Work Experience
 ======
-* Postdoctoral Researcher in Robotics, AI and XR @ <b> ETH Zurich </b> in Switzerland - 2024-Present
+* Postdoctoral Researcher (Technical Lead) in Robotics, AI and XR @ <b> ETH Zurich </b> in Switzerland - 2024-Present
 * Teaching Assistant and Mentor @ <b> The University of Edinburgh </b> in Edinburgh, UK - 2019/2024
 * Research Intern @ <b> Telexistence </b> in Tokyo, Japan - Jul-Oct 2022
 * Software Engineer Intern @ <b> Audi AG </b> in Ingolstadt, Germany - Nov-May 2015/16
