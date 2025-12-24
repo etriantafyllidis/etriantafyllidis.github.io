@@ -9,7 +9,7 @@ redirect_from:
 
 {% include base_path %}
 
-My CV can be found [here](https://etriantafyllidis.github.io/files/cv_triantafyllidis.pdf). For an up-to-date CV, please contact me under: first_name [dot] last_name [at] gmail [dot] com.
+My CV can be found [here](https://etriantafyllidis.github.io/files/cv_triantafyllidis.pdf). For an up-to-date CV, please contact me directly.
 
 Education
 ======
